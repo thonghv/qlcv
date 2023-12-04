@@ -34,7 +34,7 @@ class TodoController extends Controller
         // $result = Todo::all();
 
         $department_ids = [];
-        if (Auth::user()->departments == null) {
+        if (Auth::user()->permission == 'ADMIN' || Auth::user()->permission == 'ADMIN') {
             $result = Todo::all();
         } else {
             $department_ids = json_decode(Auth::user()->departments);
@@ -59,10 +59,10 @@ class TodoController extends Controller
             $rs->tongsodauviec = $tongsodauviec;
 
             // Get employees belongs to department
-            $allUsers = DB::table('users')->get();
-            $usersTemp = $this->getUserByDepartmentId($allUsers, $rs->id);
+            $allUsers = DB::table('users')->where('permission', '=', 'USER')->get();
+            // $usersTemp = $this->getUserByDepartmentId($allUsers, $rs->id);
             $managersTemp = json_decode($rs->managers);
-            foreach ($usersTemp as $us) {
+            foreach ($allUsers as $us) {
                 $idStr = strval($us->id);
                 if (in_array($idStr, $managersTemp)) {
                     $us->is_manager = 1;
@@ -71,13 +71,13 @@ class TodoController extends Controller
                 }
             }
 
-            $rs->users = $usersTemp;
+            $rs->users = $allUsers;
         }
         // dd($result);
         if (!$result->isEmpty()) {
             return view('todo.todo', ['todos' => $result, 'image' => Auth::user()->userimage]);
         } else {
-            return view('todo.todo', ['todos' => false, 'image' => Auth::user()->userimage]);
+            return view('todo.todo', ['todos' => $result, 'image' => Auth::user()->userimage]);
         }
     }
 

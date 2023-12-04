@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Todo;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -77,8 +78,10 @@ class RegisterController extends Controller
             $add_user = $data['add_user'];
         }
 
+
+
         $path = Storage::putFile('userimages',$data['userimage']);
-        return User::create([
+        $userNew = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
@@ -87,5 +90,16 @@ class RegisterController extends Controller
             'departments' => json_encode($departmentsTemp),
             'add_user' => $add_user
         ]);
+
+        foreach ($departmentsTemp as $d) {
+            $todo = Todo::find($d);
+            $managers = json_decode($todo->managers);
+            array_push($managers, $userNew->id);
+            Todo::where('id', $d)
+            ->update(['managers' => json_encode($managers)]);
+        }
+
+        return $userNew;
+       
     }
 }

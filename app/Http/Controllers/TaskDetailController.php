@@ -6,6 +6,7 @@ use App\Model\TaskDetail;
 use App\Model\TaskDetailReport;
 use App\Model\TaskDetailFile;
 use App\Todo;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Validator;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 use App\Enum;
 use Carbon\Carbon ;
 use Storage;
+use Illuminate\Support\Facades\DB;
+
 class TaskDetailController extends Controller
 {
 
@@ -251,6 +254,35 @@ class TaskDetailController extends Controller
     public function updateUserManage(Request $request)
     {
         $id_todo = $request->id_todo;
+
+        $allUsers = DB::table('users')->where('permission', '=', 'USER')->get();
+        
+        // Danh sach user quan ly phong ban nay
+        $userIds = json_decode($request->managers_user_id);
+
+        foreach ($allUsers as $user) {
+          
+            $user = User::find($user->id);
+            $departments = json_decode($user->departments);
+
+            // Kiem tra danh sach checked có id của user này hay không?
+            if (in_array($user->id, $userIds)) {
+                // Kiem tra xem da ton tai chua? neu chua ton tai thi add vao.
+                if (!in_array($id_todo, $departments)) {
+                    array_push($departments, $id_todo);
+                    User::where('id', $user->id)->update(['departments' => json_encode($departments)]);
+                }
+               
+            } else {
+                // Neu khong co thi kiem tra user đó có đang quan ly phong nay hay khong? neu co thi remove
+                if (in_array($id_todo, $departments)) {
+                    $departments = array_values(array_filter($departments, function ($item) use ($id_todo) {
+                        return $item != $id_todo;
+                    }));
+                    User::where('id', $user->id)->update(['departments' => json_encode($departments)]);
+                }
+            }
+        }
 
         Todo::where('id', $id_todo)
         ->update(['managers' => $request->managers_user_id]);

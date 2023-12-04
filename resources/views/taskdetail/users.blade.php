@@ -15,7 +15,7 @@
                             <thead>
                                 <tr>
                                     <th width="70">Họ Tên</th>
-                                    <th width="30%">Đồng Quản Lý</th>
+                                    <th width="30%">Quản Lý</th>
                                 </tr>
                             </thead>
                             <tbody>

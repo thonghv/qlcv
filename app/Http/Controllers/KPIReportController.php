@@ -72,8 +72,11 @@ class KPIReportController extends Controller
             $rs->viectredeadline = $viectredeadline + $numberTreHanTemp;
             $rs->viectruocdeadline = $numberTruocHanTemp;
             $rs->viecdungdeadline = $numberDungHanTemp;
-
-            if ($viectredeadline + $numberTreHanTemp > 0) {
+            $rs->viecchuahoanthanh = $viecdagiao-($viectredeadline + $numberTreHanTemp + $numberTruocHanTemp + $numberDungHanTemp);
+            
+            if ($viecdagiao == 0) {
+                $rs->ketqua = 'Đúng Hạn';
+            } else if ($viectredeadline + $numberTreHanTemp > 0) {
                 $rs->ketqua = 'Trễ Hạn';
             } else if ($numberTruocHanTemp >= $viecdagiao) {
                 $rs->ketqua = 'Trước Hạn';

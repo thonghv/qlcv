@@ -41,4 +41,4 @@ Route::get( '/download/{filename}/{name}', 'TaskDetailController@download');
 Route::resource('home','TodoController');
 
 Route::get('/kpi','KPIReportController@index');
-
+Route::post('/kpi/report','KPIReportController@report');

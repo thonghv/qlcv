@@ -36,11 +36,40 @@ class KPIReportController extends Controller
      */
     public function index()
     {
+
+        $fromDate = Carbon::now()->startOfMonth()->format('d/m/yy');
+        $toDate = Carbon::now()->format('d/m/yy'); 
+        
+        $result = $this->getData($fromDate, $toDate);
+
+        return view('report.kpi', ['todos' => $result, 'image' => Auth::user()->userimage]);
+    }
+
+    public function report(Request $request)
+    {
+        $result = [];
+
+        $option = $request->option;
+        $fromDate = $request->fromDate;
+        $toDate = $request->toDate;
+        if($option == "option2") {
+            $result = $this->getData($fromDate, $toDate);
+        }
+
+        return view('report.kpi', ['todos' => $result, 'image' => Auth::user()->userimage]);
+    }
+
+    public function getData($fromDate, $toDate) {
+        
         $result = Todo::all();
 
+        $from = Carbon::createFromFormat('d/m/Y', $fromDate);
+        $to = Carbon::createFromFormat('d/m/Y', $toDate);
         foreach ($result as $rs) {
             $viecdagiao = $rs->taskDetail()
-                ->where('is_kpi', '=', 1)->count();
+                ->where('is_kpi', '=', 1)
+                ->whereBetween('date_create', [$from, $to])
+                ->count();
             $rs->viecdagiao = $viecdagiao;
 
             // $vieckhongdat = $rs->taskDetail()->where('status', '=', 'REJECT')->count();
@@ -51,9 +80,12 @@ class KPIReportController extends Controller
 
             // Tinh so viec da done nhung tre deadline
             $tongsodauviec = $rs->taskDetail()->where('status', '=', 'DONE')
-                ->where('is_kpi', '=', 1)->get();
+                ->where('is_kpi', '=', 1)
+                ->whereBetween('date_create', [$from, $to])
+                ->get();
             $viectredeadline = $rs->taskDetail()->where('status', '!=', 'DONE')
                 ->where('is_kpi', '=', 1)
+                ->whereBetween('date_create', [$from, $to])
                 ->whereDate('deadline', '<', \Carbon::today()->toDateString())->count();
             $numberTreHanTemp = 0;
             $numberTruocHanTemp = 0;
@@ -84,154 +116,10 @@ class KPIReportController extends Controller
                 $rs->ketqua = 'Đúng Hạn';
             }
         }
-        // dd($result);
-        if (!$result->isEmpty()) {
-            return view('report.kpi', ['todos' => $result, 'image' => Auth::user()->userimage]);
-        } else {
-            return view('report.kpi', ['todos' => false, 'image' => Auth::user()->userimage]);
-        }
+
+        return $result;
     }
 
-    /**
-     * Get a validator for an incoming Todo request.
-     *
-     * @param  array  $request
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $request)
-    {
-        return Validator::make($request, [
-            'todo' => 'required'
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('todo.addtodo');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $id_todo = $request->id_todo;
-        $isKpi = 1;
-        if ($request->is_kpi == null) {
-            $isKpi = 0;
-        }
-        $detail = new TaskDetail();
-        $detail->id_todo = $id_todo;
-        $detail->title = $request->title;
-        $detail->is_kpi = $isKpi;
-        $detail->content_task = $request->content_task;
-        if (!empty($request->deadline)) {
-            $detail->deadline = Carbon::createFromFormat('d/m/Y', $request->deadline);
-        }
-        //$detail->content_task=$request->content_task;
-        $detail->date_create = new DateTime;
-        $detail->status = "CREATE";
-        $detail->is_read = false;
-        $detail->save();
-
-
-        $files = $request->file('file');
-
-        if (!empty($files)) :
-            foreach ($files as $file) :
-
-                $filename = $file->store('upload');
-                TaskDetailFile::create([
-                    'id_task_detail' => $detail->id,
-                    'id_user' => Auth::user()->id,
-                    'name_file' => $file->getClientOriginalName(),
-                    'file' => $file->hashName()
-
-                ]);
-
-            endforeach;
-
-        endif;
-
-
-        //dd($files);
-
-
-        //dd($detail);
-
-
-        return \Redirect::back()->with('message', 'Operation Successful !');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function updateUserManage(Request $request)
-    {
-        $id_todo = $request->id_todo;
-
-        Todo::where('id', $id_todo)
-            ->update(['managers' => $request->managers_user_id]);
-
-        return \Redirect::back()->with('message', 'Operation Successful !');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, TaskDetail $taskDetail)
-    {
-
-        dd('update');
-
-        $this->validator($request->all())->validate();
-        if ($taskDetail->fill($request->all())->save()) {
-            $result = Auth::user()->todo()->get();
-            if (!$result->isEmpty()) {
-                return view('todo.todo', ['todos' => $result, 'image' => Auth::user()->userimage]);
-            } else {
-                return view('todo.todo', ['todos' => false, 'image' => Auth::user()->userimage]);
-            }
-        }
-    }
-    public function success(Request $request)
-    {
-        //dd($request->task_id);
-        $id_task_detail = $request->id_task_detail;
-
-        $taskDetail = TaskDetail::find($id_task_detail);
-        //dd($id_task_detail);
-
-
-        if ($taskDetail->deadline > $taskDetail->taskDetailReport()->orderBy('count_report', 'desc')->first()->date_report) {
-            $taskDetail->update(['status' => 'DONE', 'late_deadline' => 'true']);
-        } else {
-            $taskDetail->update(['status' => 'DONE', 'late_deadline' => 'true']);
-        }
-
-
-        $detailReport =  TaskDetailReport::where('id_task_detail', $id_task_detail)->orderBy('count_report', 'desc')->first();
-        $detailReport->comment_reject = "Đạt";
-        $detailReport->date_reject = new DateTime;
-        $detailReport->id_user_reject = Auth::user()->id;
-        $detailReport->save();
-        return 'true';
-    }
     /**
      * Remove the specified resource from storage.
      *
@@ -243,21 +131,5 @@ class KPIReportController extends Controller
         /*if($todo->delete()){
             return back();
         }*/
-    }
-
-    public function download($filename = '', $name = '')
-    {
-        // Check if file exists in app/storage/file folder
-        $file_path = storage_path() . "/app/public/upload/" . $filename;
-        $headers = array(
-            'Content-Disposition: attachment; filename=' . $filename,
-        );
-        if (file_exists($file_path)) {
-            // Send Download
-            return \Response::download($file_path, $name, $headers);
-        } else {
-            // Error
-            exit('Requested file does not exist on our server!');
-        }
     }
 }

@@ -6,10 +6,12 @@
         <h3>Báo cáo KPI</h3>
     </div>
 </div>
+<form class="form-horizontal" role="form" enctype="multipart/form-data" method="POST" action="{{url('/kpi/report')}}" style="padding: 10px; border: 1px solid #ddd">
+{{ csrf_field() }}
 <div class="row">
     <div class="col-md-4">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+            <input class="form-check-input" type="radio" name="option" id="exampleRadios1" value="option1" >
             <label class="form-check-label" for="exampleRadios1">
                 Theo Quý
             </label>
@@ -17,9 +19,9 @@
     </div>
     <div class="col-md-4">
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option2">
+            <input class="form-check-input" type="radio" name="option" id="exampleRadios1" value="option2" checked>
             <label class="form-check-label" for="exampleRadios1">
-                Từ ngày ... Đến ngày
+                Theo Khoảng Thời Gian
             </label>
         </div>
     </div>
@@ -52,11 +54,10 @@
     });
   </script>
 </div>
-
-<div class="row" id="div1">
+<div class="row" id="div1" style="display: none">
     <div class="col-md-6">
         <div class='col-sm-6'>
-        <select id='permission' name="permission" class="input-large form-control">
+        <select id='permission' name="q" class="input-large form-control">
                                     <option value="q1" selected="selected">Quý 1</option>
                                     <option value="q2">Quý 2</option>
                                     <option value="q3">Qúy 3</option>
@@ -65,30 +66,45 @@
         </div>
     </div>
 </div>
-<div class="row" id="div2" style="display: none">
+<div class="row" id="div2">
     <div class="col-md-6">
-        <div class='col-sm-6'>
+        <div class='col-sm-5'>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" />
+                    <input type='text' class="form-control" name="fromDate" />
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <script type="text/javascript">
+                var currentDate = new Date();
+                currentDate.setDate(1);
                 $(function () {
                     $('#datetimepicker1').datetimepicker({
-                        locale: 'vi'
+                        defaultDate: currentDate.toISOString().split('T')[0],
+                        format: 'DD/MM/YYYY',
+                        showClose: true,
+                        icons: {
+                            time: 'glyphicon glyphicon-time',
+                            date: 'glyphicon glyphicon-calendar',
+                            up: 'glyphicon glyphicon-chevron-up',
+                            down: 'glyphicon glyphicon-chevron-down',
+                            previous: 'glyphicon glyphicon-chevron-left',
+                            next: 'glyphicon glyphicon-chevron-right',
+                            today: 'glyphicon glyphicon-screenshot',
+                            clear: 'glyphicon glyphicon-trash',
+                            close: 'glyphicon glyphicon-remove'
+                        }
                     });
                 });
             </script>
         </div>
-    
-        <div class='col-sm-6'>
+        <div class='col-sm-2'></div>
+        <div class='col-sm-5'>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker2'>
-                    <input type='text' class="form-control" />
+                    <input type='text' class="form-control" name="toDate"  />
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -97,18 +113,36 @@
             <script type="text/javascript">
                 $(function () {
                     $('#datetimepicker2').datetimepicker({
-                        locale: 'vi'
+                        defaultDate: new Date(),
+                        format: 'DD/MM/YYYY',
+                        showClose: true,
+                        icons: {
+                            time: 'glyphicon glyphicon-time',
+                            date: 'glyphicon glyphicon-calendar',
+                            up: 'glyphicon glyphicon-chevron-up',
+                            down: 'glyphicon glyphicon-chevron-down',
+                            previous: 'glyphicon glyphicon-chevron-left',
+                            next: 'glyphicon glyphicon-chevron-right',
+                            today: 'glyphicon glyphicon-screenshot',
+                            clear: 'glyphicon glyphicon-trash',
+                            close: 'glyphicon glyphicon-remove'
+                        }
                     });
                 });
             </script>
         </div>
     </div>
 </div>
+</form>
+
 <br>
 <div class="row">
     <div class="col-md-12">
+    @if($todos == false)
+                    <div style="color: red; margin-bottom: 5px">Không có dữ liệu nào được tìm thấy ...</div>
+                @endif
         <div class="p-container">
-            @if($todos != false)
+         
             <table class="table">
                 <thead>
                     <tr>
@@ -123,8 +157,9 @@
                         <th scope="col">Kết quả</th>
                     </tr>
                 </thead>
+                @if($todos != false)
                 <tbody>
-                @foreach ($todos as $todo)
+                    @foreach ($todos as $todo)
                     <tr>
                         <th scope="row">
                             <a href="{{'/taskdetail/'.$todo->id}}">{{$todo->todo}}</a>
@@ -162,9 +197,10 @@
                     </tr>
                     @endforeach
                 </tbody>
+                @endif
             </table>
 
-            @endif
+           
         </div>
     </div>
 </div>

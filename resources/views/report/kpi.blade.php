@@ -58,10 +58,10 @@
     <div class="col-md-6">
         <div class='col-sm-6'>
         <select id='permission' name="q" class="input-large form-control">
-                                    <option value="q1" selected="selected">Quý 1</option>
-                                    <option value="q2">Quý 2</option>
-                                    <option value="q3">Qúy 3</option>
-                                    <option value="q4">Quý 4</option>
+                                    <option value="1" selected="selected">Quý 1</option>
+                                    <option value="2">Quý 2</option>
+                                    <option value="3">Qúy 3</option>
+                                    <option value="4">Quý 4</option>
                                 </select>
         </div>
     </div>

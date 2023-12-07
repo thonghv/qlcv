@@ -19,6 +19,10 @@ use Storage;
 
 class KPIReportController extends Controller
 {
+
+    private $ngayDauTienCacQuy = [];
+    private $ngayCuoiCungCacQuy = [];
+
     /**
      * Constructor.
      *
@@ -36,7 +40,6 @@ class KPIReportController extends Controller
      */
     public function index()
     {
-
         $fromDate = Carbon::now()->startOfMonth()->format('d/m/yy');
         $toDate = Carbon::now()->format('d/m/yy'); 
         
@@ -52,11 +55,31 @@ class KPIReportController extends Controller
         $option = $request->option;
         $fromDate = $request->fromDate;
         $toDate = $request->toDate;
+        if($option == "option1") {
+            $this->calDateQuarter();
+            $q = $request->q;
+            $f = $this->ngayDauTienCacQuy[$q];
+            $t = $this->ngayCuoiCungCacQuy[$q];
+            $result = $this->getData($f, $t);
+        }
         if($option == "option2") {
             $result = $this->getData($fromDate, $toDate);
         }
 
         return view('report.kpi', ['todos' => $result, 'image' => Auth::user()->userimage]);
+    }
+
+    public function calDateQuarter() {
+        // Lấy năm hiện tại
+        $namHienTai = Carbon::now()->year;
+
+        // Lặp qua mỗi quý
+        for ($quy = 1; $quy <= 4; $quy++) {
+            // Tìm ngày đầu tiên của quý
+            $this->ngayDauTienCacQuy[$quy] = Carbon::create($namHienTai, ($quy - 1) * 3 + 1, 1)->startOfDay()->format('d/m/yy');
+            // Tìm ngày cuoi cung của quý
+            $this->ngayCuoiCungCacQuy[$quy] = Carbon::create($namHienTai, ($quy - 1) * 3 + 3, 1)->endOfMonth()->format('d/m/yy');
+        }
     }
 
     public function getData($fromDate, $toDate) {

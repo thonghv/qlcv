@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `task_detail` (
   KEY `id_user_create` (`id_user_create`)
 ) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table qlcv.task_detail: ~46 rows (approximately)
+-- Dumping data for table qlcv.task_detail: ~45 rows (approximately)
 INSERT INTO `task_detail` (`id`, `id_todo`, `title`, `content_task`, `status`, `count_retask`, `deadline`, `id_user_create`, `date_create`, `is_read`, `late_deadline`, `is_kpi`, `created_at`, `updated_at`) VALUES
 	(51, 16, 'Đào tạo phần mềm', 'Đào tạo phần mềm cho khối chuyên môn và khối hành chính', 'REJECT', 1, '2017-12-10', NULL, '2017-11-30', 0, 0, 1, '2017-11-29 18:33:04', '2017-11-29 18:33:04'),
 	(52, 16, 'Cấu hình phần cứng', 'Cấu hình cho hệ thống phần cứng của bệnh viện', 'DONE', 2, '2017-12-30', NULL, '2017-11-30', 0, 0, 1, '2017-11-29 18:33:45', '2017-11-30 05:12:06'),
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `task_detail_file` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table qlcv.task_detail_file: ~34 rows (approximately)
+-- Dumping data for table qlcv.task_detail_file: ~33 rows (approximately)
 INSERT INTO `task_detail_file` (`id`, `id_task_detail`, `id_detail_report`, `id_user`, `comment`, `name_file`, `file`, `created_at`, `updated_at`) VALUES
 	(20, 96, NULL, 1, NULL, NULL, '/Applications/XAMPP/xamppfiles/htdocs/qlcv/storage/uploads//private/var/folders/1l/lh0k7wkn5l1b8_3h2b6214dw0000gn/T/phpMPDSAN', '2017-11-30 06:48:50', '2017-11-30 06:48:50'),
 	(21, 96, NULL, 1, NULL, NULL, '/Applications/XAMPP/xamppfiles/htdocs/qlcv/storage/uploads//private/var/folders/1l/lh0k7wkn5l1b8_3h2b6214dw0000gn/T/phpPdlaNZ', '2017-11-30 06:48:50', '2017-11-30 06:48:50'),
@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `task_detail_report` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- Dumping data for table qlcv.task_detail_report: ~41 rows (approximately)
+-- Dumping data for table qlcv.task_detail_report: ~37 rows (approximately)
 INSERT INTO `task_detail_report` (`id`, `id_task_detail`, `id_user`, `comment_report`, `date_report`, `count_report`, `id_user_reject`, `comment_reject`, `date_reject`, `created_at`, `updated_at`) VALUES
 	(1, 76, 1, 'Kinh gửi TGD', '2017-11-30', 1, 1, 'Xem lai noi dung', '2017-11-30', '2017-11-30 04:43:29', '2017-11-29 21:43:29'),
 	(2, 76, 1, 'Kinh trinh tgd', '2017-11-30', 1, NULL, NULL, NULL, '2017-11-29 21:39:43', '2017-11-29 21:39:43'),
@@ -370,23 +370,23 @@ CREATE TABLE IF NOT EXISTS `todo` (
   PRIMARY KEY (`id`),
   KEY `todo_user_id_foreign` (`user_id`),
   CONSTRAINT `todo_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table qlcv.todo: ~13 rows (approximately)
+-- Dumping data for table qlcv.todo: ~14 rows (approximately)
 INSERT INTO `todo` (`id`, `todo`, `viecdagiao`, `viectredeadline`, `vieckhongdat`, `chopheduyet`, `description`, `category`, `managers`, `user_id`, `created_at`, `updated_at`) VALUES
-	(16, 'P. CNTT', 11, 0, 0, 0, 'Phòng Công nghệ thông tin', NULL, '["12","1"]', 4, '2017-11-29 18:25:43', '2023-12-03 02:02:59'),
-	(17, 'P. TCNS', 4, 0, 0, 0, 'Phòng Tổ chức nhân sự', NULL, '[]', 4, '2017-11-29 18:26:25', '2017-11-29 18:47:04'),
+	(16, 'P. CNTT', 11, 0, 0, 0, 'Phòng Công nghệ thông tin', NULL, '[15,"8"]', 4, '2017-11-29 18:25:43', '2023-12-08 18:57:55'),
+	(17, 'P. TCNS', 4, 0, 0, 0, 'Phòng Tổ chức nhân sự', NULL, '[15]', 4, '2017-11-29 18:26:25', '2023-12-08 18:41:45'),
 	(18, 'P. TCKT', 2, 0, 0, 0, 'Phòng Tài chính kế toán', NULL, '[]', 4, '2017-11-29 18:26:44', '2017-11-29 20:30:25'),
-	(19, 'P. KTĐT', 1, 0, 0, 0, 'Phòng Kinh tế đầu tư', NULL, '[]', 4, '2017-11-29 18:27:18', '2017-11-29 20:30:50'),
+	(19, 'P. KTĐT', 1, 0, 0, 0, 'Phòng Kinh tế đầu tư', NULL, '[]', 4, '2017-11-29 18:27:18', '2023-12-04 06:54:48'),
 	(20, 'P. KD', 1, 0, 0, 0, 'Phòng Kinh doanh', NULL, '[]', 4, '2017-11-29 18:27:31', '2017-11-29 20:31:54'),
-	(21, 'P. Marketing', 1, 0, 0, 0, 'Phòng Marketing', NULL, '["12"]', 4, '2017-11-29 18:28:15', '2023-12-01 23:32:42'),
+	(21, 'P. Marketing', 1, 0, 0, 0, 'Phòng Marketing', NULL, '[]', 4, '2017-11-29 18:28:15', '2023-12-01 23:32:42'),
 	(22, 'P. CSKH', 1, 0, 0, 0, 'Phòng Chăm sóc khách hàng', NULL, '[]', 4, '2017-11-29 18:28:36', '2017-11-29 20:33:34'),
 	(23, 'P. KHTH', 1, 0, 0, 0, 'Phòng Kế hoạch tổng hợp', NULL, '[]', 4, '2017-11-29 18:28:54', '2017-11-29 20:34:05'),
 	(24, 'P. QLCL', 1, 0, 0, 0, 'Phòng Quản lý chất lượng', NULL, '[]', 4, '2017-11-29 18:29:24', '2017-11-29 20:34:39'),
 	(25, 'p. HCQT', 2, 0, 0, 0, 'Phòng HCQT', NULL, '[]', 4, '2017-11-29 18:29:43', '2017-11-29 20:35:15'),
 	(26, 'P.KTVH', 0, 0, 0, 0, 'Phòng Kỹ thuật vận hành', NULL, '[]', 4, '2017-11-29 18:30:00', '2017-11-29 18:30:00'),
-	(27, 'P. VTTBYT', 0, 0, 0, 0, 'Phòng Vật tư thiết bị y tế', NULL, '["1"]', 4, '2017-11-29 18:30:28', '2023-12-01 23:32:49'),
-	(28, 'P. KTDT', 0, 0, 0, 0, NULL, NULL, '[]', 1, '2017-11-29 21:20:11', '2017-11-29 21:20:11');
+	(27, 'P. VTTBYT', 0, 0, 0, 0, 'Phòng Vật tư thiết bị y tế', NULL, '[]', 4, '2017-11-29 18:30:28', '2023-12-01 23:32:49'),
+	(28, 'P. KTDT', 0, 0, 0, 0, NULL, NULL, '[]', 1, '2017-11-29 21:20:11', '2023-12-04 07:13:51');
 
 -- Dumping structure for table qlcv.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -405,15 +405,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   UNIQUE KEY `users_api_key_unique` (`api_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table qlcv.users: ~5 rows (approximately)
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `userimage`, `permission`, `api_key`, `remember_token`, `departments`, `add_user`, `created_at`, `updated_at`) VALUES
-	(1, 'Lê Đình Vũ Lâm', 'lam.le@benhvienbinhdinh.com.vn', '$2y$10$iDzl6Wm9CiTZS8xCPIgSQu2JIbzBrq.JBGco7LDxSUMCfIvj0u1jW', 'userimages/KxAnt0bs72OHqR9elmIEvXbNqBbkeXlIIg3TPFay.jpeg', 'ADMIN', NULL, 'myrgxLcDo8tf4rNnbw7S8PYtqCIUxaBhnwUXtiyl0ZUdt3rl7Q3adz53DcAX', '["16","17","18","19","20","21","22","23","24","25","26","27","28"]', 1, '2017-11-27 04:51:33', '2017-11-27 04:51:33'),
+	(1, 'Lê Đình Vũ Lâm', 'lam.le@benhvienbinhdinh.com.vn', '$2y$10$iDzl6Wm9CiTZS8xCPIgSQu2JIbzBrq.JBGco7LDxSUMCfIvj0u1jW', 'userimages/KxAnt0bs72OHqR9elmIEvXbNqBbkeXlIIg3TPFay.jpeg', 'ADMIN', NULL, 'qCrLjpsON7zUeUiVjmyBjhwmfsxO8k8KzfezFRQE7qtxODY41grlYWHDjlDW', '[]', 1, '2017-11-27 04:51:33', '2017-11-27 04:51:33'),
 	(4, 'Nguyễn Viết Hải', 'hai.nguyen@benhvienbinhdinh.com.vn', '$2y$10$GV/N//OVjI2geZMb1vGeoeYolVonkpnZ/LTodTgHuRxrMVq57bwdu', 'userimages/MAN6IjCmHuoaDLBdcKBcNmPptnS7ST085qXqbMFs.jpeg', 'ADMIN', NULL, 'P6PrsbfyvbbQ6mxjyvIf7aKmVT052O0VkIgrIamj2SwmSI7o3z4IiMOaIpl7', '[]', 1, '2017-11-29 00:49:39', '2017-11-29 00:49:39'),
 	(7, 'Đỗ Thị Xuân Khanh', 'khanh.do@benhvienbinhdinh.com.vn', '$2y$10$KeVyIb1CDej2hLZhor2SheiI.400QEicDmgmZhogK9a451IOCZLuO', 'userimages/H7yrE4REWqLjRTmdy5ATMdRmrykKqcPzD5wdrCsm.png', 'MANAGER', NULL, 'hO1mHNyYKx8ABthuwVbf5O0zI0c9aedrAW5j1k5w7EU4jGDxWUGYMFAy4Y7n', '[]', 1, '2017-11-29 18:22:44', '2017-11-29 18:22:44'),
-	(8, 'Võ Xuân Đăng', 'dang.vo@cotechealthcare.com.vn', '$2y$10$6Ht4pe9aP4yH2qI1AGiwWu4eJeATqvz/1ZxLFzy61uqT1nszJGafe', 'userimages/0bfFj7pxQScLvkXk30ixlB5QzXLxURTpT00VFOdK.png', 'USER', NULL, 'jqleQXzGLZQooZIpR6j0XpE7dbOptSHzJtlgzihPfln8NHv82KFvuVA89t10', '[]', 1, '2017-11-29 18:40:10', '2017-11-29 18:40:10'),
-	(12, 'X_3', 'x3@gmail.com', '$2y$10$AZt.f/LZ1zJQvNnr48TDh.FtTX7iwW0byciVyrQZkQkM7APXbgflG', 'userimages/2ja2JSD9Bf4QHQnZV2JlTdWAVMBjeBzM87bw6tND.png', 'USER', NULL, 'Vo2P20Wbv5V6yQieumTOFNkaZin9kcFs80ymMGbSR4sFi27wMpUp9BAhiuXO', '["16","21","27"]', 1, '2023-12-01 06:44:28', '2023-12-01 06:44:28');
+	(8, 'Võ Xuân Đăng', 'dang.vo@cotechealthcare.com.vn', '$2y$10$6Ht4pe9aP4yH2qI1AGiwWu4eJeATqvz/1ZxLFzy61uqT1nszJGafe', 'userimages/0bfFj7pxQScLvkXk30ixlB5QzXLxURTpT00VFOdK.png', 'USER', NULL, 'BZKtUGKFUGl5MGWHmqqUeQxpe0qb8OdIbZjNB0JgMAa8wxaYIAo1XTpMDHaZ', '["16"]', 1, '2017-11-29 18:40:10', '2023-12-08 18:57:55'),
+	(15, 'X_1', 'x1@gmail.com', '$2y$10$WUIupOyotuWbwyecjcdf8.pzqszygZqW6zVVBpSJlW9ctmN0zFbJ2', 'userimages/ZvwFwNEiOgerSrbKWuQP2ZP32YYtNYexswEInttg.png', 'MANAGER', NULL, 'LdVQSPOnCUAdtl9NOBtGNfolc5TrAQiR5m7maZf412ElGqJXEmWcCF3kY3ri', '["16","17"]', 1, '2023-12-08 18:41:45', '2023-12-08 18:41:45');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

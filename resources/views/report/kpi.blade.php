@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-4">
         <button type="submit" class="btn btn-primary" style="float: right;">
-                                    Thống Kê
+                                    Báo Cáo
      </button>
     </div>
     <script>

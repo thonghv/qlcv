@@ -34,7 +34,7 @@ class TodoController extends Controller
         // $result = Todo::all();
 
         $department_ids = [];
-        if (Auth::user()->permission == 'ADMIN' || Auth::user()->permission == 'ADMIN') {
+        if (Auth::user()->permission == 'ADMIN' || Auth::user()->permission == 'MANAGER') {
             $result = Todo::all();
         } else {
             $department_ids = json_decode(Auth::user()->departments);

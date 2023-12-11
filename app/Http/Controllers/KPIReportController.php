@@ -84,7 +84,12 @@ class KPIReportController extends Controller
 
     public function getData($fromDate, $toDate) {
         
-        $result = Todo::all();
+        if (Auth::user()->permission == 'ADMIN' || Auth::user()->permission == 'MANAGER') {
+            $result = Todo::all();
+        } else {
+            $department_ids = json_decode(Auth::user()->departments);
+            $result = Todo::whereIn('id', $department_ids)->get();
+        }
 
         $from = Carbon::createFromFormat('d/m/Y', $fromDate);
         $to = Carbon::createFromFormat('d/m/Y', $toDate);

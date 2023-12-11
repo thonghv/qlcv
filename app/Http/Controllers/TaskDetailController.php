@@ -71,7 +71,8 @@ class TaskDetailController extends Controller
                                     ->orderBy('updated_at', 'desc')
                                     ->get();
         foreach ($result_report as $rs_report) {
-            $report = $rs_report->taskDetailReport()->orderBy('count_report', 'desc')->get();
+            $report = $rs_report->taskDetailReport()->orderBy('count_report', 'asc')->get();
+            // dd($report);
             $report_ar =  array();
             foreach ($report as $rp )
             {

@@ -80,9 +80,7 @@
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Login</a></li>
                     @else
-                        @if (Auth::user()->permission === "ADMIN")
-                            <li><a href="{{ url('/kpi') }}">Báo cáo KPI</a></li>
-                        @endif
+                        <li><a href="{{ url('/kpi') }}">Báo cáo KPI</a></li>
                         @if (Auth::user()->permission === "ADMIN")
                             <li><a href="{{ url('/register') }}">Đăng ký</a></li>
                         @endif

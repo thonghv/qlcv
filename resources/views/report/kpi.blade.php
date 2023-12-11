@@ -149,11 +149,11 @@
                         <th scope="col">
                             Phòng ban
                         </th>
-                        <th scope="col">Nhiệm vụ</th>
-                        <th scope="col">CV (Trước hạn)</th>
-                        <th scope="col">CV (Đúng hạn)</th>
-                        <th scope="col">CV (Trễ hạn)</th>
-                        <th scope="col">CV (Chưa HT)</th>
+                        <th scope="col">Tổng Nhiệm vụ</th>
+                        <th scope="col">Nhiệm vụ (Trước hạn)</th>
+                        <th scope="col">Nhiệm vụ (Đúng hạn)</th>
+                        <th scope="col">Nhiệm vụ (Trễ hạn)</th>
+                        <th scope="col">Nhiệm vụ (Chưa hoàn thành)</th>
                         <th scope="col">Kết quả</th>
                     </tr>
                 </thead>

@@ -33,6 +33,13 @@ class TodoController extends Controller
         //$result = Auth::user()->todo()->get();
         // $result = Todo::all();
 
+        // for chart
+        $colChart = [];
+        $viecdagiaoDataChart = [];
+        $viecchoduyetDataChart = [];
+        $viectrehanDataChart = [];
+        $vieckhongdatDataChart = [];
+
         $department_ids = [];
         if (Auth::user()->permission == 'ADMIN' || Auth::user()->permission == 'MANAGER') {
             $result = Todo::all();
@@ -72,10 +79,26 @@ class TodoController extends Controller
             }
 
             $rs->users = $allUsers;
+
+            // for chart data
+            // add name col
+            array_push($colChart, $rs->todo);
+            // data data
+            array_push($viecdagiaoDataChart, $viecdagiao);
+            array_push($viecchoduyetDataChart, $chopheduyet);
+            array_push($viectrehanDataChart, $viectredeadline);
+            array_push($vieckhongdatDataChart, $vieckhongdat);
         }
+
+
         // dd($result);
         if (!$result->isEmpty()) {
-            return view('todo.todo', ['todos' => $result, 'image' => Auth::user()->userimage]);
+            return view('todo.todo', ['todos' => $result, 'colChart' => $colChart, 
+            'viecdagiaoDataChart' => $viecdagiaoDataChart,
+            'viecchoduyetDataChart' => $viecchoduyetDataChart,
+            'viectrehanDataChart' => $viectrehanDataChart,
+            'vieckhongdatDataChart' => $vieckhongdatDataChart,
+            'image' => Auth::user()->userimage]);
         } else {
             return view('todo.todo', ['todos' => $result, 'image' => Auth::user()->userimage]);
         }

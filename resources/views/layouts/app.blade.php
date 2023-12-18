@@ -46,12 +46,14 @@
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 <div id="app">
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
-            <div class="navbar-header">
+            <div class="navbar-header s">
 
                 <!-- Collapsed Hamburger -->
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"

@@ -2,6 +2,97 @@
 @section('title', "Bệnh viện đa khoa Bình Định")
 @section('content')
 @if (Auth::user()->permission != "USER")
+<div id="container"></div>
+<script type="text/javascript">
+    var $colName = <?php echo json_encode($colChart); ?>;
+    var $todos = [
+        {
+            name: 'Việc Đã Giao',
+            data: <?php echo json_encode($viecdagiaoDataChart); ?>
+        },
+        {
+            name: 'Việc Chờ Duyệt',
+            data: <?php echo json_encode($viecchoduyetDataChart); ?>
+        },
+        {
+            name: 'Việc Trễ Hạn',
+            data: <?php echo json_encode($viectrehanDataChart); ?>
+        },
+        {
+            name: 'Việc Không Đạt',
+            data: <?php echo json_encode($vieckhongdatDataChart); ?>
+        }
+    ]
+    Highcharts.chart('container', {
+        chart: {
+            style: {
+                fontSize: '12px'
+            },
+            type: 'column'
+        },
+        title: {
+            text: '',
+            align: 'left'
+        },
+        xAxis: {
+            categories: $colName,
+            labels: {
+                style: {
+                    fontSize:'14px'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Số lượng công việc'
+            },
+            stackLabels: {
+                enabled: true
+            },
+            labels: {
+                style: {
+                    fontSize:'10px'
+                }
+            }
+        },
+        legend: {
+            align: 'left',
+            x: 70,
+            verticalAlign: 'top',
+            y: -10,
+            floating: true,
+            backgroundColor:
+                Highcharts.defaultOptions.legend.backgroundColor || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false,
+            itemStyle: {
+                 fontSize:'10px',
+              }
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Tổng số: {point.stackTotal}',
+            style: {
+                    fontSize:'12px'
+                }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: $todos
+    });
+
+</script>
+<br>
+@endif
+@if (Auth::user()->permission != "USER")
 <div class="row">
     <div class="col-md-4 col-md-offset-8 text-right" style="padding-bottom:10px;padding-right:30px">
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popupnew">Thêm bảng mới <span class="glyphicon glyphicon-plus"></span>
@@ -13,7 +104,7 @@
 @if($todos != false)
 @foreach ($todos as $todo)
 
-<div class="col-md-3">
+<div class="col-md-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
             {{-- <h4>{{title_case($todo->todo)}}</h4>--}}
@@ -38,6 +129,7 @@
 
         </div>
         <div class="panel-body">
+            
             <div class="row">
                 <div class="col-md-6">
                     Việc đã giao : <strong>{{$todo->viecdagiao}}</strong>
@@ -53,6 +145,83 @@
                 <div class="col-md-6">
                     Việc không đạt : <strong style="color: #f31410">{{$todo->vieckhongdat}}</strong>
                 </div>
+            </div>
+            <div class="row">
+                <div id="container_{{$todo->id}}"></div>
+                <script type="text/javascript">
+                    var $viecdagiao = <?php echo $todo->viecdagiao; ?>;
+                    var $chopheduyet = <?php echo $todo->chopheduyet; ?>;
+                    var $viectredeadline = <?php echo $todo->viectredeadline; ?>;
+                    var $vieckhongdat = <?php echo $todo->vieckhongdat; ?>;
+                    Highcharts.chart('container_{{$todo->id}}', {
+                    chart: {
+                        type: 'pie',
+                        style: {
+                            fontSize: '13px'
+                        },
+                    },
+                    title: {
+                        text: ' '
+                    },
+                    tooltip: {
+                        enabled: false,
+                        valueSuffix: '%'
+                    },
+                    subtitle: {
+                        text:''
+                    },
+                    plotOptions: {
+                        series: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: [{
+                                enabled: true,
+                                distance: 20
+                            }, {
+                                enabled: true,
+                                distance: -40,
+                                format: '{point.percentage:.0f}%',
+                                style: {
+                                    fontSize: '1.2em',
+                                    textOutline: 'none',
+                                    opacity: 0.7
+                                },
+                                filter: {
+                                    operator: '>',
+                                    property: 'percentage',
+                                    value: 10
+                                }
+                            }]
+                        }
+                    },
+                    series: [
+                        {
+                            name: 'Tỷ lệ',
+                            colorByPoint: true,
+                            data: [
+                                {
+                                    name: 'Đã giao ({{$todo->viecdagiao}})',
+                                    y: $viecdagiao
+                                },
+                                {
+                                    name: 'Chờ duyệt ({{$todo->chopheduyet}})',
+                                    y: $chopheduyet
+                                },
+                                {
+                                    name: 'Trễ hạn ({{$todo->viectredeadline}})',
+                                    y: $viectredeadline
+                                },
+                                {
+                                    name: 'Không đạt ({{$todo->vieckhongdat}})',
+                                    y: $vieckhongdat,
+                                    sliced: true,
+                                    selected: true,
+                                }
+                            ]
+                        }
+                    ]
+                });
+                </script>
             </div>
 
         </div>

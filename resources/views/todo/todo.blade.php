@@ -24,12 +24,12 @@
         {
             name: 'Trễ hạn',
             data: <?php echo json_encode($viectrehanDataChart); ?>,
-            color: '#a94442'
+            color: '#f31410'
         },
         {
             name: 'Không đạt',
             data: <?php echo json_encode($vieckhongdatDataChart); ?>,
-            color: '#f31410'
+            color: '#ff7f00'
         }
     ]
     Highcharts.chart('container', {
@@ -229,12 +229,12 @@
                                 {
                                     name: 'Trễ hạn ({{$todo->viectredeadline}})',
                                     y: $viectredeadline,
-                                    color: '#a94442'
+                                    color: '#f31410'
                                 },
                                 {
                                     name: 'Không đạt ({{$todo->vieckhongdat}})',
                                     y: $vieckhongdat,
-                                    color: '#f31410',
+                                    color: '#ff7f00',
                                     sliced: true,
                                     selected: true,
                                 }

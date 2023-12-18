@@ -35,7 +35,9 @@ class TodoController extends Controller
 
         // for chart
         $colChart = [];
-        $viecdagiaoDataChart = [];
+        $tongviecdagiaoDataChart = [];
+        $viechoanthanhDataChart = [];
+        $chuahoanthanhDataChart = [];
         $viecchoduyetDataChart = [];
         $viectrehanDataChart = [];
         $vieckhongdatDataChart = [];
@@ -49,21 +51,30 @@ class TodoController extends Controller
         }
 
         foreach ($result as $rs) {
-            $viecdagiao = $rs->taskDetail()->where('status', '!=', 'DONE')->count();
-            $rs->viecdagiao = $viecdagiao;
+            // $tongviecdagiao = $rs->taskDetail()->where(' ', '!=', 'DONE')->count();
+            // $rs->tongviecdagiao = $tongviecdagiao;
+
+            $tongviecdagiao = $rs->taskDetail()->count();
+            $rs->tongviecdagiao = $tongviecdagiao;
 
             $viectredeadline = $rs->taskDetail()->where('status', '!=', 'DONE')
                 ->whereDate('deadline', '<', \Carbon::today()->toDateString())->count();
             $rs->viectredeadline = $viectredeadline;
 
-            $vieckhongdat = $rs->taskDetail()->where('status', '=', 'REJECT')->count();
+            $vieckhongdat = $rs->taskDetail()->where('status', '=', 'REJECT')
+                ->whereDate('deadline', '>=', \Carbon::today()->toDateString())->count();
             $rs->vieckhongdat = $vieckhongdat;
 
-            $chopheduyet = $rs->taskDetail()->where('status', '=', 'REPORT')->count();
+            $chopheduyet = $rs->taskDetail()->where('status', '=', 'REPORT')
+                ->whereDate('deadline', '>=', \Carbon::today()->toDateString())->count();
             $rs->chopheduyet = $chopheduyet;
 
-            $tongsodauviec = $rs->taskDetail()->where('status', '=', 'DONE')->count();
-            $rs->tongsodauviec = $tongsodauviec;
+            $viechoanthanh = $rs->taskDetail()->where('status', '=', 'DONE')->count();
+            $rs->viechoanthanh = $viechoanthanh;
+
+            $chuahoanthanh = $rs->taskDetail()->where('status', '=', 'CREATE')
+                ->whereDate('deadline', '>=', \Carbon::today()->toDateString())->count();
+            $rs->chuahoanthanh = $chuahoanthanh;
 
             // Get employees belongs to department
             $allUsers = DB::table('users')->where('permission', '=', 'USER')->get();
@@ -84,7 +95,9 @@ class TodoController extends Controller
             // add name col
             array_push($colChart, $rs->todo);
             // data data
-            array_push($viecdagiaoDataChart, $viecdagiao);
+            array_push($tongviecdagiaoDataChart, $tongviecdagiao);
+            array_push($viechoanthanhDataChart, $viechoanthanh);
+            array_push($chuahoanthanhDataChart, $chuahoanthanh);
             array_push($viecchoduyetDataChart, $chopheduyet);
             array_push($viectrehanDataChart, $viectredeadline);
             array_push($vieckhongdatDataChart, $vieckhongdat);
@@ -94,7 +107,9 @@ class TodoController extends Controller
         // dd($result);
         if (!$result->isEmpty()) {
             return view('todo.todo', ['todos' => $result, 'colChart' => $colChart, 
-            'viecdagiaoDataChart' => $viecdagiaoDataChart,
+            'tongviecdagiaoDataChart' => $tongviecdagiaoDataChart,
+            'viechoanthanhDataChart' => $viechoanthanhDataChart,
+            'chuahoanthanhDataChart' => $chuahoanthanhDataChart,
             'viecchoduyetDataChart' => $viecchoduyetDataChart,
             'viectrehanDataChart' => $viectrehanDataChart,
             'vieckhongdatDataChart' => $vieckhongdatDataChart,

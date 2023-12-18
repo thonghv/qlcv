@@ -7,20 +7,23 @@
     var $colName = <?php echo json_encode($colChart); ?>;
     var $todos = [
         {
-            name: 'Việc Đã Giao',
-            data: <?php echo json_encode($viecdagiaoDataChart); ?>
+            name: 'Đã giao',
+            data: <?php echo json_encode($viecdagiaoDataChart); ?>,
+            color: '#ddd'
         },
         {
-            name: 'Việc Chờ Duyệt',
+            name: 'Chờ duyệt',
             data: <?php echo json_encode($viecchoduyetDataChart); ?>
         },
         {
-            name: 'Việc Trễ Hạn',
-            data: <?php echo json_encode($viectrehanDataChart); ?>
+            name: 'Trễ hạn',
+            data: <?php echo json_encode($viectrehanDataChart); ?>,
+            color: '#a94442'
         },
         {
-            name: 'Việc Không Đạt',
-            data: <?php echo json_encode($vieckhongdatDataChart); ?>
+            name: 'Không đạt',
+            data: <?php echo json_encode($vieckhongdatDataChart); ?>,
+            color: '#f31410'
         }
     ]
     Highcharts.chart('container', {
@@ -201,7 +204,8 @@
                             data: [
                                 {
                                     name: 'Đã giao ({{$todo->viecdagiao}})',
-                                    y: $viecdagiao
+                                    y: $viecdagiao,
+                                    color: '#ddd'
                                 },
                                 {
                                     name: 'Chờ duyệt ({{$todo->chopheduyet}})',
@@ -209,11 +213,13 @@
                                 },
                                 {
                                     name: 'Trễ hạn ({{$todo->viectredeadline}})',
-                                    y: $viectredeadline
+                                    y: $viectredeadline,
+                                    color: '#a94442'
                                 },
                                 {
                                     name: 'Không đạt ({{$todo->vieckhongdat}})',
                                     y: $vieckhongdat,
+                                    color: '#f31410',
                                     sliced: true,
                                     selected: true,
                                 }

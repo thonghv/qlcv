@@ -66,7 +66,7 @@
 
                 <!-- Branding Image -->
                 <a href="{{ url('/todo') }}">
-                    <img src="{{url('/img/logo.png')}}" class="img-fluid" alt="Responsive image">
+                    <img src="{{url('/img/logo.png')}}" class="img-fluid" alt="Responsive image" style="height: 60px;">
                 </a>
             </div>
             <div class="navbar-brand-title">PHẦN MỀM QUẢN LÝ CÔNG VIỆC</div>

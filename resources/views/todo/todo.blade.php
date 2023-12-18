@@ -13,7 +13,8 @@
         },
         {
             name: 'Chờ duyệt',
-            data: <?php echo json_encode($viecchoduyetDataChart); ?>
+            data: <?php echo json_encode($viecchoduyetDataChart); ?>,
+            color: '#3097d1'
         },
         {
             name: 'Trễ hạn',
@@ -209,7 +210,8 @@
                                 },
                                 {
                                     name: 'Chờ duyệt ({{$todo->chopheduyet}})',
-                                    y: $chopheduyet
+                                    y: $chopheduyet,
+                                    color: '#3097d1'
                                 },
                                 {
                                     name: 'Trễ hạn ({{$todo->viectredeadline}})',

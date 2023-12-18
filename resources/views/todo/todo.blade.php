@@ -7,9 +7,14 @@
     var $colName = <?php echo json_encode($colChart); ?>;
     var $todos = [
         {
-            name: 'Đã giao',
-            data: <?php echo json_encode($viecdagiaoDataChart); ?>,
+            name: 'Chưa hoàn thành',
+            data: <?php echo json_encode($chuahoanthanhDataChart); ?>,
             color: '#ddd'
+        },
+        {
+            name: 'Đạt yêu cầu',
+            data: <?php echo json_encode($viechoanthanhDataChart); ?>,
+            color: 'green'
         },
         {
             name: 'Chờ duyệt',
@@ -133,27 +138,30 @@
 
         </div>
         <div class="panel-body">
-            
             <div class="row">
-                <div class="col-md-6">
-                    Việc đã giao : <strong>{{$todo->viecdagiao}}</strong>
+                <div class="col-md-3">
+                    Đạt yêu cầu : <strong>{{$todo->viechoanthanh}}</strong>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
+                    Việc chưa hoàn thành : <strong>{{$todo->chuahoanthanh}}</strong>
+                </div>
+                <div class="col-md-3">
                     Việc chờ duyệt : <strong>{{$todo->chopheduyet}}</strong>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-3">
                     Việc trễ hạn : <strong style="color: #a94442">{{$todo->viectredeadline}}</strong>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     Việc không đạt : <strong style="color: #f31410">{{$todo->vieckhongdat}}</strong>
                 </div>
             </div>
             <div class="row">
                 <div id="container_{{$todo->id}}"></div>
                 <script type="text/javascript">
-                    var $viecdagiao = <?php echo $todo->viecdagiao; ?>;
+                    var $chuahoanthanh = <?php echo $todo->chuahoanthanh; ?>;
+                    var $viechoanthanh = <?php echo $todo->viechoanthanh; ?>;
                     var $chopheduyet = <?php echo $todo->chopheduyet; ?>;
                     var $viectredeadline = <?php echo $todo->viectredeadline; ?>;
                     var $vieckhongdat = <?php echo $todo->vieckhongdat; ?>;
@@ -204,9 +212,14 @@
                             colorByPoint: true,
                             data: [
                                 {
-                                    name: 'Đã giao ({{$todo->viecdagiao}})',
-                                    y: $viecdagiao,
+                                    name: 'Chưa hoàn thành ({{$todo->chuahoanthanh}})',
+                                    y: $chuahoanthanh,
                                     color: '#ddd'
+                                },
+                                {
+                                    name: 'Đạt yêu cầu ({{$todo->viechoanthanh}})',
+                                    y: $viechoanthanh,
+                                    color: 'green'
                                 },
                                 {
                                     name: 'Chờ duyệt ({{$todo->chopheduyet}})',
@@ -233,7 +246,7 @@
             </div>
 
         </div>
-        <div class="panel-footer"><strong>Tổng số việc đã làm:</strong> {{$todo->tongsodauviec}}</div>
+        <div class="panel-footer"><strong>Tổng số việc đã giao: {{$todo->tongviecdagiao}} </strong></div>
     </div>
 
 </div>

@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">Đăng ký cho người dùng mới</div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" enctype="multipart/form-data" method="POST" action="{{ url('/register') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
+                            <label for="name" class="col-md-4 control-label">Họ và Tên</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            <label for="email" class="col-md-4 control-label">Địa chỉ email</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
+                            <label for="password" class="col-md-4 control-label">Mật khẩu</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control" name="password" required>
@@ -53,7 +53,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                            <label for="password-confirm" class="col-md-4 control-label">Xác nhận lại mật khẩu</label>
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
@@ -61,7 +61,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="userimage" class="col-md-4 control-label">Image</label>
+                            <label for="userimage" class="col-md-4 control-label">Hình đại diện</label>
 
                             <div class="col-md-6">
                                 <input id="userimage" type="file" class="form-control" name="userimage" required>
@@ -77,8 +77,8 @@
                             <div class="col-md-6">
                                 <select id='permission' name="permission" class="input-large form-control">
                                     <option value="USER" selected="selected">Người dùng</option>
-                                    <option value="MANAGER">Quản lý</option>
-                                    <option value="ADMIN">Quản trị hệ thống</option>
+                                    <option value="MANAGER">Cấp quản lý</option>
+                                    <option value="ADMIN">Quản trị hệ thống (Admin)</option>
                                 </select>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="department"  class="col-md-4 control-label">Thêm người dùng</label>
+                            <label for="department"  class="col-md-4 control-label">Có quyền thêm người dùng khác vào phòng ban</label>
                             <div class="col-md-6">
                                 <input name="add_user" type="checkbox" value="1">
                             </div>

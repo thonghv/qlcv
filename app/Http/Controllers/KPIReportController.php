@@ -41,7 +41,7 @@ class KPIReportController extends Controller
     public function index()
     {
         $fromDate = Carbon::now()->startOfMonth()->format('d/m/yy');
-        $toDate = Carbon::now()->format('d/m/yy'); 
+        $toDate = Carbon::now()->endOfMonth()->format('d/m/yy'); 
         
         $result = $this->getData($fromDate, $toDate);
 
@@ -91,12 +91,12 @@ class KPIReportController extends Controller
             $result = Todo::whereIn('id', $department_ids)->get();
         }
 
-        $from = Carbon::createFromFormat('d/m/Y', $fromDate);
-        $to = Carbon::createFromFormat('d/m/Y', $toDate);
+        $from = Carbon::createFromFormat('d/m/yy', $fromDate);
+        $to = Carbon::createFromFormat('d/m/yy', $toDate);
         foreach ($result as $rs) {
             $viecdagiao = $rs->taskDetail()
                 ->where('is_kpi', '=', 1)
-                ->whereBetween('date_create', [$from, $to])
+                ->whereBetween('deadline', [$from, $to])
                 ->count();
             $rs->viecdagiao = $viecdagiao;
 
@@ -109,11 +109,11 @@ class KPIReportController extends Controller
             // Tinh so viec da done nhung tre deadline
             $tongsodauviec = $rs->taskDetail()->where('status', '=', 'DONE')
                 ->where('is_kpi', '=', 1)
-                ->whereBetween('date_create', [$from, $to])
+                ->whereBetween('deadline', [$from, $to])
                 ->get();
             $viectredeadline = $rs->taskDetail()->where('status', '!=', 'DONE')
                 ->where('is_kpi', '=', 1)
-                ->whereBetween('date_create', [$from, $to])
+                ->whereBetween('deadline', [$from, $to])
                 ->whereDate('deadline', '<', \Carbon::today()->toDateString())->count();
             $numberTreHanTemp = 0;
             $numberTruocHanTemp = 0;

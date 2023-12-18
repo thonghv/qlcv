@@ -125,11 +125,6 @@
 
             <!-- Split button -->
             <div class="icon-right" style="">
-                @if (Auth::user()->permission == 'ADMIN')
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#popupremovetask_{{$todo->id}}">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-                @endif
                 <!-- Button Add User -->
                 @if (Auth::user()->add_user === 1)
                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#popupmanageusersdetail_{{$todo->id}}">
@@ -139,6 +134,11 @@
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#popupnewtaskdetail_{{$todo->id}}">
                     <span class="glyphicon glyphicon-plus"></span>
                 </button>
+                @if (Auth::user()->permission == 'ADMIN')
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#popupremovetask_{{$todo->id}}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+                @endif
             </div>
 
         </div>

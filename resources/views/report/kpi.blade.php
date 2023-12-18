@@ -111,9 +111,11 @@
                 </div>
             </div>
             <script type="text/javascript">
+                var date = new Date();
+                 var lastDay = new Date(date.getFullYear(), date.getMonth() + 1 , 0);
                 $(function () {
                     $('#datetimepicker2').datetimepicker({
-                        defaultDate: new Date(),
+                        defaultDate: lastDay,
                         format: 'DD/MM/YYYY',
                         showClose: true,
                         icons: {

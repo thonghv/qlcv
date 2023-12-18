@@ -95,7 +95,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Bạn có chắc chắn muốn xóa task {{$todo->todo}} ?</h4>
+                    <h4 class="modal-title">Bạn có chắc chắn muốn xóa phòng ban {{$todo->todo}} ?</h4>
                     {{ csrf_field() }}
                     <input type="hidden" id="id_todo" name="id_todo" value="{{$todo->id}}">
                 </div>

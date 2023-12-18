@@ -33,6 +33,7 @@ Route::post('/taskdetail/comment','TaskDetailCommentController@store');
 
 Route::post('/taskdetail/reject','TaskDetailReportController@reject');
 Route::post('/taskdetail/report','TaskDetailReportController@report');
+Route::post('/taskdetail/removecv','TaskDetailReportController@removecv');
 
 
 Route::post('/taskdetail/report/{id_task_detail}','TaskDetailReportController@report');

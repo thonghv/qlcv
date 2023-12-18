@@ -129,9 +129,15 @@
                                     <span class="label label-info">Hoàn Thành Đúng Hạn</span>
                                 @endif
                             @endif
+
                             @if (Auth::user()->permission != "MANAGER" && $type == "dth")
                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#popupnewsendreport_{{$task_detail->id}}">
                                 <span class="glyphicon glyphicon-send"></span> Gửi báo cáo
+                            </button>
+                            @endif
+                            @if(Auth::user()->permission == "ADMIN" && $task_detail->status =="CREATE")
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#popupremovecv_{{$task_detail->id}}">
+                                <span class="glyphicon glyphicon-remove"></span> Xóa công việc
                             </button>
                             @endif
                             {{-- <button type="button" class="btn btn-default">

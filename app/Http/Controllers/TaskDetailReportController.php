@@ -253,4 +253,11 @@ class TaskDetailReportController extends Controller
         $log->type = $type;
     }
 
+    public function removecv(Request $request)
+    {
+        $id_task = $request->id_task;
+        TaskDetail::where('id', $id_task)->delete();
+        return \Redirect::back()->with('message','Operation Successful !');
+    }
+
 }

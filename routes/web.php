@@ -23,6 +23,7 @@ Route::resource('todo','TodoController');
     Route::get('/taskdetail/{id_todo}','TaskDetailController@index');
     Route::post('/taskdetail/create','TaskDetailController@store');
     Route::post('/taskdetail/updateUserManage','TaskDetailController@updateUserManage');
+    Route::post('/taskdetail/removeTask','TaskDetailController@removeTask');
     Route::put('/taskdetail/{id_task_detail}','TaskDetailController@update');
     Route::delete('/taskdetail/{id_task_detail}','TaskDetailController@destroy');
 

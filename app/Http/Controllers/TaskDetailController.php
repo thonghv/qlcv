@@ -246,6 +246,13 @@ class TaskDetailController extends Controller
 
     }
 
+    public function removeTask(Request $request)
+    {
+        $id_todo = $request->id_todo;
+        Todo::where('id', $id_todo)->delete();
+        return \Redirect::back()->with('message','Operation Successful !');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

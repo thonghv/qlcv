@@ -88,3 +88,25 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="popupremovetask_{{$todo->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form class="form-horizontal" method="post" action="{{url('/taskdetail/removeTask')}}" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Bạn có chắc chắn muốn xóa task {{$todo->todo}} ?</h4>
+                    {{ csrf_field() }}
+                    <input type="hidden" id="id_todo" name="id_todo" value="{{$todo->id}}">
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-md-5">
+                            <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-floppy-disk"></span> Xóa</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

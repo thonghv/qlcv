@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', "Bệnh viện đa khoa")
+@section('title', "Bệnh viện đa khoa Bình")
 @section('content')
 @if (Auth::user()->permission != "USER")
 <div id="container"></div>
@@ -144,21 +144,21 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     Đạt yêu cầu : <strong>{{$todo->viechoanthanh}}</strong>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     Việc chưa hoàn thành : <strong>{{$todo->chuahoanthanh}}</strong>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     Việc chờ duyệt : <strong>{{$todo->chopheduyet}}</strong>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     Việc trễ hạn : <strong style="color: #a94442">{{$todo->viectredeadline}}</strong>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     Việc không đạt : <strong style="color: #f31410">{{$todo->vieckhongdat}}</strong>
                 </div>
             </div>

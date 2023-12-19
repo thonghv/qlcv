@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', "Bệnh viện đa khoa Bình Định")
+@section('title', "Bệnh viện đa khoa")
 @section('content')
 @if (Auth::user()->permission != "USER")
 <div id="container"></div>

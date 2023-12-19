@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Bệnh viện đa khoa Bình Định')
+@section('title', 'Bệnh viện đa khoa')
 @section('content')
 <div class="row">
     <div class="col-md-6">

@@ -145,8 +145,11 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-6">
-                    Đạt yêu cầu : <strong>{{$todo->viechoanthanh}}</strong>
+                        Đạt yêu cầu : <strong>{{$todo->viechoanthanh}}</strong>
                 </div>
+            </div>
+            <div class="row">
+                
                 <div class="col-md-6">
                     Việc chưa hoàn thành : <strong>{{$todo->chuahoanthanh}}</strong>
                 </div>

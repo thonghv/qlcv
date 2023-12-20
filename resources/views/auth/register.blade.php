@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', "Bệnh viện đa khoa")
 @section('content')
 <div class="container">
     <div class="row">
